@@ -16,8 +16,18 @@ class Process {
 public class MultiLevelFeedbackQueue {
 
     public static void main(String[] args) throws FileNotFoundException {
+        // Prompt the user for input
+        Scanner console = new Scanner(System.in);
+        System.out.print("Enter the path to the input file: ");
+        String filePath = console.nextLine();
+        System.out.print("Enter the dispatch ratio: ");
+        int dispatchRatio = console.nextInt();
+        System.out.print("Enter the demotion threshold: ");
+        int demotionThreshold = console.nextInt();
+        console.close();
+
         // Read the input file
-        Scanner scanner = new Scanner(new File("input.txt"));
+        Scanner scanner = new Scanner(new File(filePath));
         ArrayList<Process> processes = new ArrayList<>();
         int clock = 0;
         while (scanner.hasNextLine()) {
@@ -86,12 +96,13 @@ public class MultiLevelFeedbackQueue {
                 if (!queueA.isEmpty()) {
                     currentProcess = queueA.remove();
                     cpuBusy = true;
-                } else if (!queueB.isEmpty()) {
+                } else if (!queueB.isEmpty())
+                {
                     currentProcess = queueB.remove();
                     cpuBusy = true;
                 }
             }
-
+    
             // Queue/Fetch Job from the file
             for (Process process : processes) {
                 if (process.arrivalTime == time) {
@@ -150,5 +161,4 @@ public class MultiLevelFeedbackQueue {
         System.out.println("Total Wait Time: " + totalWaitTime);
         System.out.println("---------------------------------------------");
     }
-}
-    
+}    
